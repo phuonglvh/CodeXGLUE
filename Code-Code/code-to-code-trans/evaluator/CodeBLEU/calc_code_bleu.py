@@ -63,7 +63,7 @@ syntax_match_score = syntax_match.corpus_syntax_match(references, hypothesis, ar
 # calculate dataflow match
 dataflow_match_score = dataflow_match.corpus_dataflow_match(references, hypothesis, args.lang)
 
-print('ngram match: {0}, weighted ngram match: {1}, syntax_match: {2}, dataflow_match: {3}'.\
+print('ngram match: {0:.4f}, weighted ngram match: {1:.4f}, syntax_match: {2:.4f}, dataflow_match: {3:.4f}'.\
                     format(ngram_match_score, weighted_ngram_match_score, syntax_match_score, dataflow_match_score))
 
 code_bleu_score = alpha*ngram_match_score\
@@ -71,7 +71,7 @@ code_bleu_score = alpha*ngram_match_score\
                 + gamma*syntax_match_score\
                 + theta*dataflow_match_score
 
-print('CodeBLEU score: ', code_bleu_score)
+print(f'CodeBLEU score: {code_bleu_score:.4f}')
 
 
 
