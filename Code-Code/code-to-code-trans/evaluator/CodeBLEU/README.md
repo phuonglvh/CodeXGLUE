@@ -19,6 +19,6 @@ python calc_code_bleu.py \
     --hyp ../predictions.txt \
     --lang java \
     --params 0.25,0.25,0.25,0.25
-# ngram match: 0.6075256576979613, weighted ngram match: 0.6367970871812899, syntax_match: 0.7511111111111111, dataflow_match: 0.7256637168141593
-CodeBLEU score:  0.6802743932011304
+# ngram match: 0.6075, weighted ngram match: 0.6368, syntax_match: 0.7511, dataflow_match: 0.7345
+# CodeBLEU score: 0.6825
 ```
