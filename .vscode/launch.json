@@ -1,0 +1,46 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: bleu",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Text-Code/text-to-code",
+            "program": "evaluator/evaluator.py",
+            "args": [
+                "-a",
+                // "evaluator/answers.json",
+                "${workspaceFolder}/../bigcode-evaluation-harness/datasets/references/bleu/references_2_py.jsonl",
+                "-p",
+                // "evaluator/predictions.txt"
+                "${workspaceFolder}/../bigcode-evaluation-harness/results/bleu/predictions_py.txt"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: codebleu",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Code-Code/code-to-code-trans/evaluator/CodeBLEU",
+            "program": "calc_code_bleu.py",
+            "args": [
+                "--lang",
+                "python",
+                "--params",
+                "0.25,0.25,0.25,0.25",
+                "--refs",
+                // "../references.txt",
+                "${workspaceFolder}/../bigcode-evaluation-harness/datasets/references/codebleu/references_2_py.txt",
+                "--hyp",
+                // "../predictions.txt",
+                "${workspaceFolder}/../bigcode-evaluation-harness/results/codebleu/predictions_py.txt"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}
