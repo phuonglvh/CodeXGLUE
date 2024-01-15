@@ -7,6 +7,10 @@ import bleu
 import weighted_ngram_match
 import syntax_match
 import dataflow_match
+import logging
+
+logger = logging.getLogger(__file__)
+logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--refs', type=str, nargs='+', required=True,
@@ -63,7 +67,7 @@ syntax_match_score = syntax_match.corpus_syntax_match(references, hypothesis, ar
 # calculate dataflow match
 dataflow_match_score = dataflow_match.corpus_dataflow_match(references, hypothesis, args.lang)
 
-print('ngram match: {0:.4f}, weighted ngram match: {1:.4f}, syntax_match: {2:.4f}, dataflow_match: {3:.4f}'.\
+logger.info('ngram_match: {0:.4f}, weighted_ngram_match: {1:.4f}, syntax_match: {2:.4f}, dataflow_match: {3:.4f}'.\
                     format(ngram_match_score, weighted_ngram_match_score, syntax_match_score, dataflow_match_score))
 
 code_bleu_score = alpha*ngram_match_score\
@@ -71,7 +75,7 @@ code_bleu_score = alpha*ngram_match_score\
                 + gamma*syntax_match_score\
                 + theta*dataflow_match_score
 
-print(f'CodeBLEU score: {code_bleu_score:.4f}')
+logger.info(f'CodeBLEU: {code_bleu_score*100:.4f}%')
 
 
 
