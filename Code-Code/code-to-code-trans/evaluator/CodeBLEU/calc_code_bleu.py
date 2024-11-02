@@ -9,6 +9,7 @@ import syntax_match
 import dataflow_match
 import logging
 import os
+import json
 
 file_directory = os.path.dirname(__file__)
 logger = logging.getLogger(__file__)
@@ -80,6 +81,19 @@ code_bleu_score = alpha*ngram_match_score\
 
 logger.info(f'CodeBLEU: {code_bleu_score*100:.4f}%')
 
+scores = {
+    "ngram_match": round(ngram_match_score, 4),
+    "weighted_ngram_match": round(weighted_ngram_match_score, 4),
+    "syntax_match": round(syntax_match_score, 4),
+    "dataflow_match": round(dataflow_match_score, 4),
+    "CodeBLEU": round(code_bleu_score, 4),
+}
+json_file_path = os.path.splitext(args.hyp)[0] + '-evaluation_results.json'
 
+with open(json_file_path, 'w') as json_file:
+    json.dump(scores, json_file, indent=4)
+
+# Log the action
+logger.info(f'Scores written to {json_file_path}')
 
 

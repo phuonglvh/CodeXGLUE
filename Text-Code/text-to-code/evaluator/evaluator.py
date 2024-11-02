@@ -22,7 +22,11 @@ def main():
 
     total = len(gts)
     EM = 0.0
-    with open("ground_truth.txt", "w") as wf:
+    
+    ground_truth_path = os.path.splitext(args.predictions)[0] + '-ground_truth.txt'
+    logger.info(f'ground_truth_path: {ground_truth_path}')
+
+    with open(ground_truth_path, "w") as wf:
         for pred, gt in zip(preds, gts):
             pred = pred.strip()
             gt = json.loads(gt)["code"]
@@ -30,13 +34,24 @@ def main():
             if pred.split() == gt.split():
                 EM += 1
 
-    bleu_score = round(_bleu("ground_truth.txt", args.predictions), 2)
+    bleu_score = round(_bleu(ground_truth_path, args.predictions), 2)
     logger.info(f"BLEU: {bleu_score}%, EM: {round(EM/total*100, 2)}%")
 
-    # try:
-    #     os.remove("ground_truth.txt")
-    # except Exception:
-    #     pass
+    scores = {
+        "BLEU": bleu_score,
+        "EM": round(EM / total * 100, 2)
+    }
+
+    # Change the extension to .json
+    json_file_path = os.path.splitext(args.predictions)[0] + '-evaluation_results.json'
+
+    # Write the dictionary to a JSON file
+    with open(json_file_path, 'w') as json_file:
+        json.dump(scores, json_file, indent=4)
+
+    # Log the action
+    logger.info(f"Scores written to {json_file_path}")
+
 
 if __name__ == "__main__":
     main()
