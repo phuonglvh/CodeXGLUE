@@ -8,6 +8,9 @@ from parser import (remove_comments_and_docstrings,
                    tree_to_variable_index)
 from tree_sitter import Language, Parser
 import pdb
+import os
+
+file_directory = os.path.dirname(__file__)
 
 dfg_function={
     'python':DFG_python,
@@ -23,7 +26,7 @@ def calc_dataflow_match(references, candidate, lang):
     return corpus_dataflow_match([references], [candidate], lang)
 
 def corpus_dataflow_match(references, candidates, lang):   
-    LANGUAGE = Language('parser/my-languages.so', lang)
+    LANGUAGE = Language(os.path.join(file_directory, 'parser/my-languages.so'), lang)
     parser = Parser()
     parser.set_language(LANGUAGE)
     parser = [parser,dfg_function[lang]]
